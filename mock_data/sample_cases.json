@@ -1,0 +1,167 @@
+[
+  {
+    "case_id": "TC001",
+    "age": 45,
+    "gender": "Male",
+    "primary_symptoms": ["chest pain", "shortness of breath"],
+    "duration_hours": 2,
+    "severity": "severe",
+    "warning_symptoms": ["chest pain"],
+    "medical_history": "hypertension",
+    "expected_urgency": "HIGH"
+  },
+  {
+    "case_id": "TC002",
+    "age": 28,
+    "gender": "Female",
+    "primary_symptoms": ["high fever", "severe weakness"],
+    "duration_hours": 24,
+    "severity": "severe",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "HIGH"
+  },
+  {
+    "case_id": "TC003",
+    "age": 70,
+    "gender": "Male",
+    "primary_symptoms": ["mild headache"],
+    "duration_hours": 5,
+    "severity": "mild",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "MEDIUM"
+  },
+  {
+    "case_id": "TC004",
+    "age": 35,
+    "gender": "Female",
+    "primary_symptoms": ["back pain"],
+    "duration_hours": 80,
+    "severity": "moderate",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "MEDIUM"
+  },
+  {
+    "case_id": "TC005",
+    "age": 20,
+    "gender": "Male",
+    "primary_symptoms": ["stomach pain"],
+    "duration_hours": 10,
+    "severity": "mild",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "LOW"
+  },
+  {
+    "case_id": "TC006",
+    "age": 60,
+    "gender": "Female",
+    "primary_symptoms": ["abdominal pain"],
+    "duration_hours": 12,
+    "severity": "severe",
+    "warning_symptoms": [],
+    "medical_history": "diabetes",
+    "expected_urgency": "MEDIUM"
+  },
+  {
+    "case_id": "TC007",
+    "age": 80,
+    "gender": "Male",
+    "primary_symptoms": ["abdominal pain"],
+    "duration_hours": 12,
+    "severity": "severe",
+    "warning_symptoms": [],
+    "medical_history": "diabetes",
+    "expected_urgency": "HIGH"
+  },
+  {
+    "case_id": "TC008",
+    "age": 45,
+    "gender": "Female",
+    "primary_symptoms": ["knee pain"],
+    "duration_hours": 200,
+    "severity": "mild",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "MEDIUM"
+  },
+  {
+    "case_id": "TC009",
+    "age": 68,
+    "gender": "Female",
+    "primary_symptoms": ["knee pain"],
+    "duration_hours": 200,
+    "severity": "mild",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "HIGH"
+  },
+  {
+    "case_id": "TC010",
+    "age": 30,
+    "gender": "Male",
+    "primary_symptoms": ["bleeding from cut"],
+    "duration_hours": 1,
+    "severity": "severe",
+    "warning_symptoms": ["bleeding"],
+    "medical_history": "none",
+    "expected_urgency": "HIGH"
+  },
+  {
+    "case_id": "TC011",
+    "age": 55,
+    "gender": "Male",
+    "primary_symptoms": ["dizziness", "confusion"],
+    "duration_hours": 2,
+    "severity": "moderate",
+    "warning_symptoms": ["confusion"],
+    "medical_history": "none",
+    "expected_urgency": "HIGH"
+  },
+  {
+    "case_id": "TC012",
+    "age": 22,
+    "gender": "Female",
+    "primary_symptoms": ["sore throat"],
+    "duration_hours": 48,
+    "severity": "mild",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "LOW"
+  },
+  {
+    "case_id": "TC013",
+    "age": 40,
+    "gender": "Male",
+    "primary_symptoms": ["cough"],
+    "duration_hours": 180,
+    "severity": "moderate",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "HIGH"
+  },
+  {
+    "case_id": "TC014",
+    "age": 25,
+    "gender": "Female",
+    "primary_symptoms": ["toothache"],
+    "duration_hours": 5,
+    "severity": "severe",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "MEDIUM"
+  },
+  {
+    "case_id": "TC015",
+    "age": 66,
+    "gender": "Male",
+    "primary_symptoms": ["high fever", "severe weakness"],
+    "duration_hours": 24,
+    "severity": "severe",
+    "warning_symptoms": [],
+    "medical_history": "none",
+    "expected_urgency": "HIGH"
+  }
+]

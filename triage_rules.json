@@ -1,0 +1,115 @@
+{
+  "warning_keywords": [
+    "chest pain",
+    "shortness of breath",
+    "breathing difficulty",
+    "bleeding",
+    "unconscious",
+    "confusion",
+    "stroke",
+    "seizure",
+    "fainting",
+    "head injury",
+    "anaphylaxis",
+    "choking",
+    "suicidal",
+    "self harm",
+    "severe burn"
+  ],
+  "rules": [
+    {
+      "id": "R_WARNING",
+      "match_warning_symptoms": true,
+      "urgency": "HIGH",
+      "reason": "Presence of critical warning symptoms."
+    },
+    {
+      "id": "R_CARDIAC_NEURO_SYMPTOMS",
+      "match_symptoms": ["sudden numbness", "slurred speech", "facial drooping", "heart palpitations", "loss of consciousness"],
+      "match_all_symptoms": false,
+      "urgency": "HIGH",
+      "reason": "Symptoms may indicate an acute neurological or cardiac event."
+    },
+    {
+      "id": "R_ALLERGIC_REACTION_SEVERE",
+      "match_symptoms": ["swelling of face", "swelling of throat", "severe allergic reaction"],
+      "match_all_symptoms": false,
+      "urgency": "HIGH",
+      "reason": "Signs of a potential severe allergic reaction."
+    },
+    {
+      "id": "R_TRAUMA_HIGH",
+      "match_symptoms": ["broken bone", "fracture", "severe laceration", "amputation", "bone pushing through skin"],
+      "match_all_symptoms": false,
+      "urgency": "HIGH",
+      "reason": "Severe physical trauma reported."
+    },
+    {
+      "id": "R_FEVER_WEAKNESS",
+      "match_symptoms": ["high fever", "severe weakness"],
+      "match_all_symptoms": true,
+      "urgency": "HIGH",
+      "reason": "Combination of high fever and severe weakness."
+    },
+    {
+      "id": "R_INFECTION_SIGNS",
+      "match_symptoms": ["vomiting", "diarrhea", "stomach ache", "nausea"],
+      "match_all_symptoms": true,
+      "urgency": "MEDIUM",
+      "reason": "Combination of gastrointestinal symptoms suggesting systemic distress."
+    },
+    {
+      "id": "R_FEVER_MODERATE",
+      "match_symptoms": ["fever"],
+      "match_all_symptoms": false,
+      "urgency": "MEDIUM",
+      "reason": "Presence of fever."
+    },
+    {
+      "id": "R_MILD_INFECTION",
+      "match_symptoms": ["runny nose", "cough", "sore throat"],
+      "match_all_symptoms": false,
+      "urgency": "LOW",
+      "reason": "Routine symptoms."
+    },
+    {
+      "id": "R_PROLONGED_MODERATE",
+      "severity": "moderate",
+      "min_duration_hours": 72,
+      "urgency": "MEDIUM",
+      "reason": "Moderate symptoms lasting more than 3 days."
+    },
+    {
+      "id": "R_SEVERE_SYMPTOMS",
+      "severity": "severe",
+      "urgency": "MEDIUM",
+      "reason": "Symptoms are reported as severe."
+    },
+    {
+      "id": "R_MODERATE_SYMPTOMS",
+      "severity": "moderate",
+      "urgency": "MEDIUM",
+      "reason": "Symptoms are reported as moderate."
+    }
+  ],
+  "modifiers": [
+    {
+      "id": "M_INFANT_RISK",
+      "max_age": 1,
+      "bump_levels": 2,
+      "reason": "Infant patient (age \u2264 1) elevated risk."
+    },
+    {
+      "id": "M_AGE_RISK",
+      "min_age": 65,
+      "bump_levels": 1,
+      "reason": "Elderly patient (age \u2265 65) elevated risk."
+    },
+    {
+      "id": "M_DURATION",
+      "min_duration_hours": 168,
+      "bump_levels": 1,
+      "reason": "Symptoms lasting > 7 days elevated urgency."
+    }
+  ]
+}
