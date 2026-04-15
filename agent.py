@@ -51,7 +51,7 @@ Disclaimer:
 
 
 class FinalFormattingAgent:
-    def __init__(self, model_name: str = "llama3.2:3b"):
+    def __init__(self, model_name: str = "llama3.2:3b-instruct-q4_K_M"):
         self.llm = ChatOllama(model=model_name, temperature=0.2)
 
     def format(self, triage_result: TriageResult, profile: SymptomProfile, emoji: str) -> str:
@@ -86,7 +86,7 @@ class FinalFormattingAgent:
         return response.content
 
 class TriageAgent:
-    def __init__(self, model_name="llama3:8b", formatter_model_name="llama3.2:3b"):
+    def __init__(self, model_name="llama3:8b", formatter_model_name="llama3.2:3b-instruct-q4_K_M"):
         self.llm = ChatOllama(model=model_name, temperature=0.1)
         self.formatter = FinalFormattingAgent(model_name=formatter_model_name)
         self.reset()

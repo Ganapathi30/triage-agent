@@ -31,11 +31,9 @@ st.markdown("""
 with st.sidebar:
     st.header("Triage Console")
     st.info("**Administrative Use Only**\n\nThis tool is designed for intake prioritization and does not provide medical diagnoses.")
-    
-    if "agent" in st.session_state:
-        status = "Complete" if st.session_state.agent.is_collection_complete else "In Progress"
-        st.write(f"**Session Status:** {status}")
-    
+
+    status_placeholder = st.empty()
+
     if st.button("Clear Session / New Patient", use_container_width=True):
         st.session_state.agent.reset()
         st.session_state.messages = [{
@@ -82,6 +80,7 @@ if not st.session_state.agent.is_collection_complete:
         with st.chat_message("assistant", avatar="🩺"):
             if st.session_state.agent.is_collection_complete:
                 # Run the triage engine
+                st.info("Symptom collection complete, analysing priority...")
                 profile = extract_symptoms(response_text)
                 triage_result = classify_urgency(profile)
                 final_output = st.session_state.agent.format_final_output(triage_result, profile)
@@ -97,4 +96,8 @@ if not st.session_state.agent.is_collection_complete:
 
 # Final call to action if complete
 if st.session_state.agent.is_collection_complete:
-    st.success("Intake session completed. Please review the report above.")
+    st.success("Intake session completed. Please review the report above.") 
+
+if "agent" in st.session_state:
+    status = "Complete" if st.session_state.agent.is_collection_complete else "In Progress"
+    status_placeholder.write(f"**Session Status:** {status}")
