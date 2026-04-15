@@ -78,6 +78,10 @@ def classify_urgency(profile: SymptomProfile, rules_data=None) -> TriageResult:
         elif rule.get("match_symptoms") or rule.get("match_symptom_groups"):
             required = _expand_match_symptoms(rule, symptom_groups)
             matched = _matches_symptoms(required, symptom_text, rule.get("match_all_symptoms", False))
+            if matched and rule.get("severity"):
+                matched = profile.severity == rule["severity"]
+            if matched and rule.get("min_duration_hours"):
+                matched = profile.duration_hours >= rule["min_duration_hours"]
 
         elif rule.get("severity") and rule.get("min_duration_hours"):
             if profile.severity == rule["severity"] and profile.duration_hours >= rule["min_duration_hours"]:

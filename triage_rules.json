@@ -98,8 +98,9 @@
       "id": "R_FEVER_MODERATE",
       "match_symptoms": ["fever"],
       "match_all_symptoms": false,
+      "min_duration_hours": 48,
       "urgency": "MEDIUM",
-      "reason": "Presence of fever."
+      "reason": "Fever lasting at least 2 days."
     },
     {
       "id": "R_MILD_INFECTION",

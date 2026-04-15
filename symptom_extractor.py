@@ -21,7 +21,7 @@ def extract_symptoms(llm_output: str) -> SymptomProfile:
     Parses LLM JSON or raw text to extract required fields safely.
     Falls back to safe defaults if extraction fails.
     """
-
+    print(llm_output)
     data = _robust_json_parse(llm_output)
     
     # Default safe fallbacks
