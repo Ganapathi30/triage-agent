@@ -7,6 +7,7 @@ Your ONLY purpose is to collect patient symptoms and details to help prioritize 
 You MUST NOT provide medical diagnosis or disease predictions. Never say "you have X condition".
 Ask short, prompt 1-line questions. ONE question at a time.
 DO NOT use greetings or pleasantries (e.g., no "hello", "sorry you are experiencing this").
+DO NOT repeat previous questions. DO NOT echo the user's input. Wait for the user to answer, then ask ONLY the next required question.
 Just collect the following information: age, gender, symptoms, duration, severity, warning symptoms, and medical history.
 
 If critical fields are missing, ask follow-up 1-line questions.
@@ -52,22 +53,8 @@ class TriageAgent:
         color_map = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "🟢"}
         color = color_map.get(triage_result.urgency_level, "🟢")
 
-        # LLM writes the empathetic reasoning based on our strict rule outputs
-        reasoning_prompt = f"""
-You must translate the following technical triage reasons into plain, non-clinical, empathetic bullet points.
-Reasons: {triage_result.reasoning}
-
-DO NOT give a diagnosis. Use cautious words like "may indicate", "suggests".
-Output ONLY the bullet points, starting each with a hyphen.
-"""
-        try:
-            expanded_reasons = self.llm.invoke([SystemMessage(content=reasoning_prompt)]).content
-        except Exception as e:
-            expanded_reasons = "\n".join(f"  - {r}" for r in triage_result.reasoning)
-
-        # Fallback to direct reasons if LLM formatting failed
-        if not "-" in expanded_reasons:
-            expanded_reasons = "\n".join(f"  - {r}" for r in triage_result.reasoning)
+        # Format reasons directly from the rule engine output
+        expanded_reasons = "\n".join(f"  - {r}" for r in triage_result.reasoning)
 
         output = f"""{color} Urgency Level: **{triage_result.urgency_level}**
 
