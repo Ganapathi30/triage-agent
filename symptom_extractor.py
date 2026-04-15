@@ -23,8 +23,6 @@ def extract_symptoms(llm_output: str) -> SymptomProfile:
     """
 
     data = _robust_json_parse(llm_output)
-    print(llm_output)
-    print(data)
     
     # Default safe fallbacks
     age = data.get("age", 0)

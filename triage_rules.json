@@ -14,7 +14,11 @@
     "choking",
     "suicidal",
     "self harm",
-    "severe burn"
+    "severe burn",
+    "cancer",
+    "tumour",
+    "brain",
+    "head"
   ],
   "rules": [
     {
@@ -93,6 +97,13 @@
     }
   ],
   "modifiers": [
+    {
+      "id": "M_NEURO_ONC_HISTORY",
+      "medical_history_keywords": ["brain tumor", "brain tumour", "intracranial tumor", "intracranial tumour"],
+      "symptom_keywords": ["headache", "vision", "seizure", "confusion", "numbness", "weakness", "speech", "balance", "dizziness", "vomiting"],
+      "bump_levels": 1,
+      "reason": "History of brain tumor elevates urgency for neurological symptoms."
+    },
     {
       "id": "M_INFANT_RISK",
       "max_age": 1,

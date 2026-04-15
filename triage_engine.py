@@ -83,11 +83,20 @@ def classify_urgency(profile: SymptomProfile, rules_data=None) -> TriageResult:
     # Modifiers
     for mod in rules_data.get("modifiers", []):
         bumped = False
-        if "max_age" in mod and profile.age <= mod["max_age"]:
+        if "medical_history_keywords" in mod and profile.medical_history:
+            history = str(profile.medical_history).lower()
+            if any(kw in history for kw in mod["medical_history_keywords"]):
+                if "symptom_keywords" in mod:
+                    symptoms = [s.lower() for s in profile.primary_symptoms]
+                    if any(any(kw in s for s in symptoms) for kw in mod["symptom_keywords"]):
+                        bumped = True
+                else:
+                    bumped = True
+        if not bumped and "max_age" in mod and profile.age <= mod["max_age"]:
             bumped = True
-        elif "min_age" in mod and profile.age >= mod["min_age"]:
+        if not bumped and "min_age" in mod and profile.age >= mod["min_age"]:
             bumped = True
-        elif "min_duration_hours" in mod and profile.duration_hours >= mod["min_duration_hours"]:
+        if not bumped and "min_duration_hours" in mod and profile.duration_hours >= mod["min_duration_hours"]:
             bumped = True
             
         if bumped:
