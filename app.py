@@ -84,7 +84,7 @@ if not st.session_state.agent.is_collection_complete:
                 # Run the triage engine
                 profile = extract_symptoms(response_text)
                 triage_result = classify_urgency(profile)
-                final_output = st.session_state.agent.format_final_output(triage_result)
+                final_output = st.session_state.agent.format_final_output(triage_result, profile)
                 
                 # Render in a high-visibility container
                 st.markdown("### 📋 Final Triage Report")
