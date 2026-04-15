@@ -18,8 +18,40 @@
     "cancer",
     "tumour",
     "brain",
-    "head"
+    "head injury"
   ],
+  "symptom_groups": {
+    "NEURO_CARDIAC": [
+      "sudden numbness",
+      "slurred speech",
+      "facial drooping",
+      "heart palpitations",
+      "loss of consciousness"
+    ],
+    "ALLERGIC_SEVERE": [
+      "swelling of face",
+      "swelling of throat",
+      "severe allergic reaction"
+    ],
+    "TRAUMA_SEVERE": [
+      "broken bone",
+      "fracture",
+      "severe laceration",
+      "amputation",
+      "bone pushing through skin"
+    ],
+    "GI_CLUSTER": [
+      "vomiting",
+      "diarrhea",
+      "stomach ache",
+      "nausea"
+    ],
+    "UPPER_RESPIRATORY": [
+      "runny nose",
+      "cough",
+      "sore throat"
+    ]
+  },
   "rules": [
     {
       "id": "R_WARNING",
@@ -29,21 +61,21 @@
     },
     {
       "id": "R_CARDIAC_NEURO_SYMPTOMS",
-      "match_symptoms": ["sudden numbness", "slurred speech", "facial drooping", "heart palpitations", "loss of consciousness"],
+      "match_symptom_groups": ["NEURO_CARDIAC"],
       "match_all_symptoms": false,
       "urgency": "HIGH",
       "reason": "Symptoms may indicate an acute neurological or cardiac event."
     },
     {
       "id": "R_ALLERGIC_REACTION_SEVERE",
-      "match_symptoms": ["swelling of face", "swelling of throat", "severe allergic reaction"],
+      "match_symptom_groups": ["ALLERGIC_SEVERE"],
       "match_all_symptoms": false,
       "urgency": "HIGH",
       "reason": "Signs of a potential severe allergic reaction."
     },
     {
       "id": "R_TRAUMA_HIGH",
-      "match_symptoms": ["broken bone", "fracture", "severe laceration", "amputation", "bone pushing through skin"],
+      "match_symptom_groups": ["TRAUMA_SEVERE"],
       "match_all_symptoms": false,
       "urgency": "HIGH",
       "reason": "Severe physical trauma reported."
@@ -57,7 +89,7 @@
     },
     {
       "id": "R_INFECTION_SIGNS",
-      "match_symptoms": ["vomiting", "diarrhea", "stomach ache", "nausea"],
+      "match_symptom_groups": ["GI_CLUSTER"],
       "match_all_symptoms": true,
       "urgency": "MEDIUM",
       "reason": "Combination of gastrointestinal symptoms suggesting systemic distress."
@@ -71,7 +103,7 @@
     },
     {
       "id": "R_MILD_INFECTION",
-      "match_symptoms": ["runny nose", "cough", "sore throat"],
+      "match_symptom_groups": ["UPPER_RESPIRATORY"],
       "match_all_symptoms": false,
       "urgency": "LOW",
       "reason": "Routine symptoms."
