@@ -1,6 +1,6 @@
 from langchain_ollama import ChatOllama
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
-from models import SymptomProfile, TriageResult
+from data.models import SymptomProfile, TriageResult
 
 SYSTEM_PROMPT = """You are a Clinical Triage Assistant Agent. 
 Your ONLY purpose is to collect patient symptoms and details to help prioritize them.

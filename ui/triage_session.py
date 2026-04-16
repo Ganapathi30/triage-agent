@@ -2,10 +2,10 @@ from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
-from agent import TriageAgent
-from symptom_extractor import extract_symptoms
-from triage_engine import classify_urgency
-from triage_queue_store import append_triage_entry
+from services.agent import TriageAgent
+from services.symptom_extractor import extract_symptoms
+from services.triage_engine import classify_urgency
+from services.triage_queue_store import append_triage_entry
 
 
 def render_triage_session(queue_path: Path, status_placeholder=None) -> None:

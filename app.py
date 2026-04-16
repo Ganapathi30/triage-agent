@@ -1,14 +1,20 @@
+import sys
 from pathlib import Path
 
 import streamlit as st
-from triage_queue_store import load_triage_queue, save_triage_queue
-from triage_rules_editor import render_rules_editor
-from triage_session import render_triage_session
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from services.triage_queue_store import load_triage_queue, save_triage_queue
+from ui.triage_rules_editor import render_rules_editor
+from ui.triage_session import render_triage_session
 
 
-BASE_DIR = Path(__file__).resolve().parent
-RULES_PATH = BASE_DIR / "triage_rules.json"
-QUEUE_PATH = BASE_DIR / "mock_data" / "triage_queue.json"
+BASE_DIR = ROOT_DIR
+RULES_PATH = BASE_DIR / "data" / "triage_rules.json"
+QUEUE_PATH = BASE_DIR / "data" / "triage_queue.json"
 
 
 

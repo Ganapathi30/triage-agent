@@ -1,7 +1,7 @@
 import json
 import re
 from typing import Dict, Any
-from models import SymptomProfile
+from data.models import SymptomProfile
 
 def _robust_json_parse(text: str) -> Dict[str, Any]:
     text = text.replace('```json', '').replace('```', '')

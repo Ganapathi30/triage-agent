@@ -1,8 +1,8 @@
 import json
 import os
 import pytest
-from models import SymptomProfile
-from triage_engine import classify_urgency
+from data.models import SymptomProfile
+from services.triage_engine import classify_urgency
 
 @pytest.fixture
 def sample_cases():

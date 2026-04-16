@@ -1,12 +1,13 @@
 import json
-import os
-from models import SymptomProfile, TriageResult
+from pathlib import Path
+
+from data.models import SymptomProfile, TriageResult
 
 def load_rules(filepath=None):
     if filepath is None:
-        filepath = os.path.join(os.path.dirname(__file__), "triage_rules.json")
-    with open(filepath, 'r', encoding='utf-8') as f:
-        return json.load(f)
+        filepath = Path(__file__).resolve().parents[1] / "data" / "triage_rules.json"
+    with Path(filepath).open("r", encoding="utf-8") as handle:
+        return json.load(handle)
 
 def _bump_urgency(current_urgency, bump_levels):
     levels = ["LOW", "MEDIUM", "HIGH"]
