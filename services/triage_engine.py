@@ -1,12 +1,13 @@
 import json
-import os
-from models import SymptomProfile, TriageResult
+from pathlib import Path
+
+from data.models import SymptomProfile, TriageResult
 
 def load_rules(filepath=None):
     if filepath is None:
-        filepath = os.path.join(os.path.dirname(__file__), "triage_rules.json")
-    with open(filepath, 'r', encoding='utf-8') as f:
-        return json.load(f)
+        filepath = Path(__file__).resolve().parents[1] / "data" / "triage_rules.json"
+    with Path(filepath).open("r", encoding="utf-8") as handle:
+        return json.load(handle)
 
 def _bump_urgency(current_urgency, bump_levels):
     levels = ["LOW", "MEDIUM", "HIGH"]
@@ -35,6 +36,13 @@ def _matches_symptoms(required, symptom_text, match_all):
     if match_all:
         return all(req in symptom_text for req in required)
     return any(req in symptom_text for req in required)
+
+
+def _has_severity_constraint(rule):
+    severity = rule.get("severity")
+    if not isinstance(severity, str):
+        return False
+    return severity.strip().lower() not in ("", "none")
 
 def classify_urgency(profile: SymptomProfile, rules_data=None) -> TriageResult:
     if rules_data is None:
@@ -78,7 +86,7 @@ def classify_urgency(profile: SymptomProfile, rules_data=None) -> TriageResult:
         elif rule.get("match_symptoms") or rule.get("match_symptom_groups"):
             required = _expand_match_symptoms(rule, symptom_groups)
             matched = _matches_symptoms(required, symptom_text, rule.get("match_all_symptoms", False))
-            if matched and rule.get("severity"):
+            if matched and _has_severity_constraint(rule):
                 matched = profile.severity == rule["severity"]
             if matched and rule.get("min_duration_hours"):
                 matched = profile.duration_hours >= rule["min_duration_hours"]

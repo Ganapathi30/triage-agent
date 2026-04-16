@@ -1,7 +1,22 @@
+import sys
+from pathlib import Path
+
 import streamlit as st
-from agent import TriageAgent
-from symptom_extractor import extract_symptoms
-from triage_engine import classify_urgency
+
+ROOT_DIR = Path(__file__).resolve().parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from services.triage_queue_store import load_triage_queue, save_triage_queue
+from ui.triage_rules_editor import render_rules_editor
+from ui.triage_session import render_triage_session
+
+
+BASE_DIR = ROOT_DIR
+RULES_PATH = BASE_DIR / "data" / "triage_rules.json"
+QUEUE_PATH = BASE_DIR / "data" / "triage_queue.json"
+
+
 
 # --- UI CONFIGURATION ---
 st.set_page_config(
@@ -31,70 +46,38 @@ st.markdown("""
 with st.sidebar:
     st.header("Triage Console")
     st.info("**Administrative Use Only**\n\nThis tool is designed for intake prioritization and does not provide medical diagnoses.")
-    
-    if "agent" in st.session_state:
-        status = "Complete" if st.session_state.agent.is_collection_complete else "In Progress"
-        st.write(f"**Session Status:** {status}")
-    
+
+    page_choice = st.radio(
+        "Menu",
+        ["Triage Session", "Rule Editor"],
+        index=0,
+    )
+
+    status_placeholder = st.empty()
+
+    st.subheader("Current Shift Queue")
+    queue_data = load_triage_queue(QUEUE_PATH)
+    if queue_data:
+        st.dataframe(queue_data, use_container_width=True, hide_index=True)
+    else:
+        st.caption("No patients triaged yet for this shift.")
+
+    if st.button("Clear Shift Queue", use_container_width=True):
+        save_triage_queue(QUEUE_PATH, [])
+        st.rerun()
+
     if st.button("Clear Session / New Patient", use_container_width=True):
         st.session_state.agent.reset()
         st.session_state.messages = [{
             "role": "assistant",
             "content": "Hello! I am the clinical triage assistant. To begin, please tell me the patient's age and gender."
         }]
+        st.session_state.queue_logged = False
         st.rerun()
 
-# --- MAIN UI ---
-st.title("Clinical Triage Assistant")
-st.divider()
-
-# Initialize session state
-if "agent" not in st.session_state:
-    st.session_state.agent = TriageAgent(model_name="llama3:8b")
-    st.session_state.messages = [
-        {
-            "role": "assistant",
-            "content": "Hello! I am the clinical triage assistant. To begin evaluating the patient's urgency, please tell me the patient's age and gender."
-        }
-    ]
-
-# Display chat history with clean icons
-for message in st.session_state.messages:
-    avatar = "🩺" if message["role"] == "assistant" else "👤"
-    with st.chat_message(message["role"], avatar=avatar):
-        st.markdown(message["content"])
-
-# --- CHAT LOGIC ---
-if not st.session_state.agent.is_collection_complete:
-    prompt = st.chat_input("Type patient symptoms or response here...")
-
-    if prompt:
-        # User message
-        with st.chat_message("user", avatar="👤"):
-            st.markdown(prompt)
-        st.session_state.messages.append({"role": "user", "content": prompt})
-
-        # Process logic
-        with st.spinner("Analyzing clinical priority..."):
-            response_text = st.session_state.agent.process_message(prompt)
-
-        # Assistant response
-        with st.chat_message("assistant", avatar="🩺"):
-            if st.session_state.agent.is_collection_complete:
-                # Run the triage engine
-                profile = extract_symptoms(response_text)
-                triage_result = classify_urgency(profile)
-                final_output = st.session_state.agent.format_final_output(triage_result)
-                
-                # Render in a high-visibility container
-                st.markdown("### 📋 Final Triage Report")
-                st.markdown(final_output)
-                
-                st.session_state.messages.append({"role": "assistant", "content": f"### Triage Report Generated\n{final_output}"})
-            else:
-                st.markdown(response_text)
-                st.session_state.messages.append({"role": "assistant", "content": response_text})
-
-# Final call to action if complete
-if st.session_state.agent.is_collection_complete:
-    st.success("Intake session completed. Please review the report above.")
+if page_choice == "Rule Editor":
+    st.title("Triage Rule Editor")
+    st.divider()
+    render_rules_editor(RULES_PATH)
+else:
+    render_triage_session(QUEUE_PATH, status_placeholder)

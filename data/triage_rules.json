@@ -56,63 +56,81 @@
     {
       "id": "R_WARNING",
       "match_warning_symptoms": true,
+      "severity": "none",
       "urgency": "HIGH",
       "reason": "Presence of critical warning symptoms."
     },
     {
       "id": "R_CARDIAC_NEURO_SYMPTOMS",
-      "match_symptom_groups": ["NEURO_CARDIAC"],
-      "match_all_symptoms": false,
+      "match_symptom_groups": [
+        "NEURO_CARDIAC"
+      ],
+      "severity": "none",
       "urgency": "HIGH",
       "reason": "Symptoms may indicate an acute neurological or cardiac event."
     },
     {
       "id": "R_ALLERGIC_REACTION_SEVERE",
-      "match_symptom_groups": ["ALLERGIC_SEVERE"],
-      "match_all_symptoms": false,
+      "match_symptom_groups": [
+        "ALLERGIC_SEVERE"
+      ],
+      "severity": "none",
       "urgency": "HIGH",
       "reason": "Signs of a potential severe allergic reaction."
     },
     {
       "id": "R_TRAUMA_HIGH",
-      "match_symptom_groups": ["TRAUMA_SEVERE"],
-      "match_all_symptoms": false,
+      "match_symptom_groups": [
+        "TRAUMA_SEVERE"
+      ],
+      "severity": "none",
       "urgency": "HIGH",
       "reason": "Severe physical trauma reported."
     },
     {
       "id": "R_FEVER_WEAKNESS",
-      "match_symptoms": ["high fever", "severe weakness"],
+      "match_symptoms": [
+        "high fever",
+        "severe weakness"
+      ],
       "match_all_symptoms": true,
+      "severity": "none",
       "urgency": "HIGH",
       "reason": "Combination of high fever and severe weakness."
     },
     {
       "id": "R_INFECTION_SIGNS",
-      "match_symptom_groups": ["GI_CLUSTER"],
+      "match_symptom_groups": [
+        "GI_CLUSTER"
+      ],
       "match_all_symptoms": true,
+      "severity": "none",
       "urgency": "MEDIUM",
       "reason": "Combination of gastrointestinal symptoms suggesting systemic distress."
     },
     {
       "id": "R_FEVER_MODERATE",
-      "match_symptoms": ["fever"],
-      "match_all_symptoms": false,
+      "match_symptoms": [
+        "fever"
+      ],
       "min_duration_hours": 48,
+      "severity": "none",
       "urgency": "MEDIUM",
       "reason": "Fever lasting at least 2 days."
     },
     {
       "id": "R_MILD_INFECTION",
-      "match_symptom_groups": ["UPPER_RESPIRATORY"],
-      "match_all_symptoms": false,
+      "match_symptom_groups": [
+        "UPPER_RESPIRATORY"
+      ],
+      "severity": "none",
       "urgency": "LOW",
       "reason": "Routine symptoms."
     },
     {
       "id": "R_PROLONGED_MODERATE",
-      "severity": "moderate",
       "min_duration_hours": 72,
+      "severity": "moderate",
       "urgency": "MEDIUM",
       "reason": "Moderate symptoms lasting more than 3 days."
     },
@@ -127,13 +145,46 @@
       "severity": "moderate",
       "urgency": "MEDIUM",
       "reason": "Symptoms are reported as moderate."
+    },
+    {
+      "id": "R_INFECTION",
+      "match_symptoms": [
+        "infection",
+        "bleeding"
+      ],
+      "min_duration_hours": 1,
+      "severity": "none",
+      "urgency": "MEDIUM",
+      "reason": "There is a risk of infection."
+    },
+    {
+      "id": "None",
+      "severity": "none",
+      "urgency": "NONE",
+      "reason": "None"
     }
   ],
   "modifiers": [
     {
       "id": "M_NEURO_ONC_HISTORY",
-      "medical_history_keywords": ["brain tumor", "brain tumour", "intracranial tumor", "intracranial tumour"],
-      "symptom_keywords": ["headache", "vision", "seizure", "confusion", "numbness", "weakness", "speech", "balance", "dizziness", "vomiting"],
+      "medical_history_keywords": [
+        "brain tumor",
+        "brain tumour",
+        "intracranial tumor",
+        "intracranial tumour"
+      ],
+      "symptom_keywords": [
+        "headache",
+        "vision",
+        "seizure",
+        "confusion",
+        "numbness",
+        "weakness",
+        "speech",
+        "balance",
+        "dizziness",
+        "vomiting"
+      ],
       "bump_levels": 1,
       "reason": "History of brain tumor elevates urgency for neurological symptoms."
     },
