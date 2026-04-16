@@ -63,7 +63,6 @@ class FinalFormattingAgent:
             "Severity: {severity}\n"
             "Warning Symptoms: {warnings}\n"
             "Medical History: {history}\n"
-            "Warning Symptoms: {warnings}\n"
             "Notes: Derive reasoning from symptoms, duration, severity, warning signs, and medical history only.\n"
             "Suggested Action: {action}\n"
             "Disclaimer: {disclaimer}\n"
@@ -87,7 +86,7 @@ class FinalFormattingAgent:
 
 class TriageAgent:
     def __init__(self, model_name="llama3:8b", formatter_model_name="llama3.2:3b-instruct-q4_K_M"):
-        self.llm = ChatOllama(model=model_name, temperature=0.1)
+        self.llm = ChatOllama(model=model_name, temperature=0.1, alive=-1)
         self.formatter = FinalFormattingAgent(model_name=formatter_model_name)
         self.reset()
 

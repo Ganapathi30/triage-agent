@@ -37,6 +37,13 @@ def _matches_symptoms(required, symptom_text, match_all):
         return all(req in symptom_text for req in required)
     return any(req in symptom_text for req in required)
 
+
+def _has_severity_constraint(rule):
+    severity = rule.get("severity")
+    if not isinstance(severity, str):
+        return False
+    return severity.strip().lower() not in ("", "none")
+
 def classify_urgency(profile: SymptomProfile, rules_data=None) -> TriageResult:
     if rules_data is None:
         rules_data = load_rules()
@@ -79,7 +86,7 @@ def classify_urgency(profile: SymptomProfile, rules_data=None) -> TriageResult:
         elif rule.get("match_symptoms") or rule.get("match_symptom_groups"):
             required = _expand_match_symptoms(rule, symptom_groups)
             matched = _matches_symptoms(required, symptom_text, rule.get("match_all_symptoms", False))
-            if matched and rule.get("severity"):
+            if matched and _has_severity_constraint(rule):
                 matched = profile.severity == rule["severity"]
             if matched and rule.get("min_duration_hours"):
                 matched = profile.duration_hours >= rule["min_duration_hours"]
