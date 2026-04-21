@@ -1,17 +1,1 @@
-[
-  {
-    "timestamp": "2026-04-15 21:23",
-    "urgency": "LOW",
-    "primary_symptom": "Fever"
-  },
-  {
-    "timestamp": "2026-04-16 11:27",
-    "urgency": "HIGH",
-    "primary_symptom": "bleeding, infection"
-  },
-  {
-    "timestamp": "2026-04-16 13:08",
-    "urgency": "MEDIUM",
-    "primary_symptom": "headache"
-  }
-]
+[]

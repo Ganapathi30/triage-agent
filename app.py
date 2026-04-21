@@ -17,15 +17,13 @@ RULES_PATH = BASE_DIR / "data" / "triage_rules.json"
 QUEUE_PATH = BASE_DIR / "data" / "triage_queue.json"
 
 
-
-# --- UI CONFIGURATION ---
 st.set_page_config(
     page_title="Triage AI | Clinical Intake",
     page_icon="🩺",
     layout="centered"
 )
 
-# Custom CSS for a "Chatbot App" feel
+
 st.markdown("""
     <style>
     .stChatMessage {
@@ -42,7 +40,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- SIDEBAR: Patient Status & Disclaimer ---
+
 with st.sidebar:
     st.header("Triage Console")
     st.info("**Administrative Use Only**\n\nThis tool is designed for intake prioritization and does not provide medical diagnoses.")
