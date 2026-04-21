@@ -40,19 +40,102 @@
       "amputation",
       "bone pushing through skin"
     ],
-    "GI_CLUSTER": [
-      "vomiting",
-      "diarrhea",
-      "stomach ache",
-      "nausea"
+    "GI_CLUSTER": ["vomiting", "diarrhea", "stomach ache", "nausea"],
+    "UPPER_RESPIRATORY": ["runny nose", "cough", "sore throat"],
+
+    "CRITICAL_CARDIAC": [
+      "chest pain",
+      "pain in chest",
+      "chest tightness",
+      "chest pressure",
+      "radiating chest pain",
+      "pain in left arm",
+      "jaw pain",
+      "upper back pain with chest discomfort"
     ],
-    "UPPER_RESPIRATORY": [
-      "runny nose",
-      "cough",
-      "sore throat"
+
+    "CRITICAL_RESPIRATORY": [
+      "shortness of breath",
+      "breathing difficulty",
+      "cannot breathe",
+      "gasping for air",
+      "rapid breathing",
+      "labored breathing"
+    ],
+
+    "CRITICAL_NEURO": [
+      "sudden numbness",
+      "slurred speech",
+      "facial drooping",
+      "confusion",
+      "loss of consciousness",
+      "seizure",
+      "fainting",
+      "unresponsive"
+    ],
+
+    "CRITICAL_BLEEDING": [
+      "heavy bleeding",
+      "uncontrolled bleeding",
+      "vomiting blood",
+      "blood in stool",
+      "internal bleeding"
+    ],
+
+    "CRITICAL_TRAUMA": [
+      "head injury",
+      "severe burn",
+      "fracture",
+      "amputation",
+      "deep wound",
+      "bone exposed"
+    ],
+
+    "CRITICAL_ALLERGIC": [
+      "anaphylaxis",
+      "swelling of throat",
+      "swelling of face",
+      "difficulty swallowing",
+      "hives with breathing difficulty"
     ]
   },
   "rules": [
+    {
+      "id": "R_CRITICAL_CARDIAC",
+      "match_symptom_groups": ["CRITICAL_CARDIAC"],
+      "urgency": "HIGH",
+      "reason": "Symptoms suggest a possible cardiac emergency."
+    },
+    {
+      "id": "R_CRITICAL_RESPIRATORY",
+      "match_symptom_groups": ["CRITICAL_RESPIRATORY"],
+      "urgency": "HIGH",
+      "reason": "Severe breathing difficulty detected."
+    },
+    {
+      "id": "R_CRITICAL_NEURO",
+      "match_symptom_groups": ["CRITICAL_NEURO"],
+      "urgency": "HIGH",
+      "reason": "Neurological emergency symptoms detected."
+    },
+    {
+      "id": "R_CRITICAL_BLEEDING",
+      "match_symptom_groups": ["CRITICAL_BLEEDING"],
+      "urgency": "HIGH",
+      "reason": "Severe or internal bleeding suspected."
+    },
+    {
+      "id": "R_CRITICAL_TRAUMA",
+      "match_symptom_groups": ["CRITICAL_TRAUMA"],
+      "urgency": "HIGH",
+      "reason": "Major trauma detected."
+    },
+    {
+      "id": "R_CRITICAL_ALLERGIC",
+      "match_symptom_groups": ["CRITICAL_ALLERGIC"],
+      "urgency": "HIGH",
+      "reason": "Severe allergic reaction risk."
+    },
     {
       "id": "R_WARNING",
       "match_warning_symptoms": true,
@@ -61,38 +144,41 @@
       "reason": "Presence of critical warning symptoms."
     },
     {
-      "id": "R_CARDIAC_NEURO_SYMPTOMS",
-      "match_symptom_groups": [
-        "NEURO_CARDIAC"
+      "id": "R_CHEST_PAIN",
+      "match_symptoms": [
+        "chest pain",
+        "pain in chest",
+        "chest tightness",
+        "chest pressure"
       ],
+      "severity": "none",
+      "urgency": "HIGH",
+      "reason": "Chest-related symptoms may indicate a cardiac emergency."
+    },
+    {
+      "id": "R_CARDIAC_NEURO_SYMPTOMS",
+      "match_symptom_groups": ["NEURO_CARDIAC"],
       "severity": "none",
       "urgency": "HIGH",
       "reason": "Symptoms may indicate an acute neurological or cardiac event."
     },
     {
       "id": "R_ALLERGIC_REACTION_SEVERE",
-      "match_symptom_groups": [
-        "ALLERGIC_SEVERE"
-      ],
+      "match_symptom_groups": ["ALLERGIC_SEVERE"],
       "severity": "none",
       "urgency": "HIGH",
       "reason": "Signs of a potential severe allergic reaction."
     },
     {
       "id": "R_TRAUMA_HIGH",
-      "match_symptom_groups": [
-        "TRAUMA_SEVERE"
-      ],
+      "match_symptom_groups": ["TRAUMA_SEVERE"],
       "severity": "none",
       "urgency": "HIGH",
       "reason": "Severe physical trauma reported."
     },
     {
       "id": "R_FEVER_WEAKNESS",
-      "match_symptoms": [
-        "high fever",
-        "severe weakness"
-      ],
+      "match_symptoms": ["high fever", "severe weakness"],
       "match_all_symptoms": true,
       "severity": "none",
       "urgency": "HIGH",
@@ -100,9 +186,7 @@
     },
     {
       "id": "R_INFECTION_SIGNS",
-      "match_symptom_groups": [
-        "GI_CLUSTER"
-      ],
+      "match_symptom_groups": ["GI_CLUSTER"],
       "match_all_symptoms": true,
       "severity": "none",
       "urgency": "MEDIUM",
@@ -110,9 +194,7 @@
     },
     {
       "id": "R_FEVER_MODERATE",
-      "match_symptoms": [
-        "fever"
-      ],
+      "match_symptoms": ["fever"],
       "min_duration_hours": 48,
       "severity": "none",
       "urgency": "MEDIUM",
@@ -120,9 +202,7 @@
     },
     {
       "id": "R_MILD_INFECTION",
-      "match_symptom_groups": [
-        "UPPER_RESPIRATORY"
-      ],
+      "match_symptom_groups": ["UPPER_RESPIRATORY"],
       "severity": "none",
       "urgency": "LOW",
       "reason": "Routine symptoms."
@@ -137,7 +217,7 @@
     {
       "id": "R_SEVERE_SYMPTOMS",
       "severity": "severe",
-      "urgency": "MEDIUM",
+      "urgency": "HIGH",
       "reason": "Symptoms are reported as severe."
     },
     {
@@ -148,10 +228,7 @@
     },
     {
       "id": "R_INFECTION",
-      "match_symptoms": [
-        "infection",
-        "bleeding"
-      ],
+      "match_symptoms": ["infection", "bleeding"],
       "min_duration_hours": 1,
       "severity": "none",
       "urgency": "MEDIUM",
