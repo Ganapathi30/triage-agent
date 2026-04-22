@@ -55,7 +55,10 @@ def render_triage_session(queue_path: Path, status_placeholder=None) -> None:
                         st.session_state.queue_logged = True
 
                     st.markdown("### 📋 Final Triage Report")
-                    st.markdown(final_output)
+                    streamed_output = st.write_stream(
+                        st.session_state.agent.format_final_output_stream(triage_result, profile)
+                    )
+                    final_output = streamed_output if isinstance(streamed_output, str) else final_output
 
                     st.session_state.messages.append({"role": "assistant", "content": f"### Triage Report Generated\n{final_output}"})
                 else:

@@ -1,1 +1,27 @@
-[]
+[
+  {
+    "timestamp": "2026-04-22 10:01",
+    "urgency": "LOW",
+    "primary_symptom": "cough"
+  },
+  {
+    "timestamp": "2026-04-22 11:26",
+    "urgency": "HIGH",
+    "primary_symptom": "chest pain"
+  },
+  {
+    "timestamp": "2026-04-22 12:02",
+    "urgency": "MEDIUM",
+    "primary_symptom": "fever"
+  },
+  {
+    "timestamp": "2026-04-22 12:41",
+    "urgency": "LOW",
+    "primary_symptom": "stomach ache"
+  },
+  {
+    "timestamp": "2026-04-22 12:45",
+    "urgency": "HIGH",
+    "primary_symptom": "stomach ache"
+  }
+]

@@ -63,8 +63,8 @@ class FinalFormattingAgent:
     def __init__(self, model_name: str = "llama3.2:3b-instruct-q4_K_M"):
         self.llm = ChatOllama(model=model_name, temperature=0.2)
 
-    def format(self, triage_result: TriageResult, profile: SymptomProfile, emoji: str) -> str:
-        payload = (
+    def _build_payload(self, triage_result: TriageResult, profile: SymptomProfile, emoji: str) -> str:
+        return (
             "Urgency Emoji: {emoji}\n"
             "Urgency Level: {level}\n"
             "Symptoms: {symptoms}\n"
@@ -87,11 +87,25 @@ class FinalFormattingAgent:
             disclaimer=triage_result.disclaimer,
         )
 
+    def format(self, triage_result: TriageResult, profile: SymptomProfile, emoji: str) -> str:
+        payload = self._build_payload(triage_result, profile, emoji)
+
         response = self.llm.invoke([
             SystemMessage(content=FINAL_FORMAT_PROMPT),
             HumanMessage(content=payload),
         ])
         return response.content
+
+    def format_stream(self, triage_result: TriageResult, profile: SymptomProfile, emoji: str):
+        payload = self._build_payload(triage_result, profile, emoji)
+
+        for chunk in self.llm.stream([
+            SystemMessage(content=FINAL_FORMAT_PROMPT),
+            HumanMessage(content=payload),
+        ]):
+            text = getattr(chunk, "content", "")
+            if text:
+                yield text
 
 class TriageAgent:
     def __init__(self, model_name="llama3:8b", formatter_model_name="llama3.2:3b-instruct-q4_K_M"):
@@ -115,7 +129,7 @@ class TriageAgent:
 
         self.conversation_history.append(AIMessage(content=ai_text))
         return ai_text
-
+    
     def format_final_output(self, triage_result: TriageResult, profile: SymptomProfile) -> str:
         try:
                         color_map = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "🟢"}
@@ -123,3 +137,11 @@ class TriageAgent:
                         return self.formatter.format(triage_result, profile, color)
         except Exception as exc:
                 return f"Formatter model error: {exc}"
+
+    def format_final_output_stream(self, triage_result: TriageResult, profile: SymptomProfile):
+        color_map = {"HIGH": "🔴", "MEDIUM": "🟡", "LOW": "🟢"}
+        color = color_map.get(triage_result.urgency_level, "🟢")
+        try:
+            yield from self.formatter.format_stream(triage_result, profile, color)
+        except Exception as exc:
+            yield f"Formatter model error: {exc}"
